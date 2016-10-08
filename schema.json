@@ -1,0 +1,158 @@
+[
+  {
+    "namespace": "manifest",
+    "types": [
+      {
+        "$extend": "Permission",
+        "choices": [{
+          "type": "string",
+          "enum": [ "logins" ]
+        }]
+      }
+    ]
+  },
+  {
+    "namespace": "logins",
+    "description": "Access saved logins and passwords",
+    "permissions": ["logins"],
+    "types": [
+      {
+        "id": "LoginItem",
+        "type": "object",
+        "properties": {
+          "username": {
+ 	    "type": "string",
+            "description": "The username"
+          },
+          "password": {
+ 	    "type": "string",
+            "description": "The password"
+          },
+          "origin": {
+ 	    "type": "string",
+            "optional": true,
+            "description": "The URL for the web service which requires the credential. You should omit anything after the hostname and (optional) port."
+          },
+          "realm": {
+            "type": "string",
+            "optional": true,
+            "description": "The WWW-Authenticate response header sent by the server may include a \"realm\" field as detailed in RFC 2617. If it does, this property contains the value for the \"realm\" field. Otherwise, it is omitted.\nThe realm is displayed in Firefox's Password Manager, under \"Site\", in brackets after the URL."
+          },
+          "formSubmitURL": {
+ 	    "type": "string",
+            "optional": true,
+            "description": "The URL an HTML form credential is submitted to"
+          },
+          "usernameField": {
+ 	    "type": "string",
+            "description": "The value of the name attribute for the user name input field in a form"
+          },
+          "passwordField": {
+ 	    "type": "string",
+            "description": "The value of the name attribute for the password input field in a form"
+          }
+        }
+      },
+      {
+        "id": "LoginQuery",
+        "type": "object",
+        "description": "Equivalent to LoginItem but with all properties marked as optional.  Instances of this object are passed as a parameter to logins method to choose login items on which to operate.",
+        "properties": {
+          "username": {
+            "type": "string",
+            "optional": true
+          },
+          "password": {
+ 	    "type": "string",
+            "optional": true
+          },
+          "origin": {
+ 	    "type": "string",
+            "optional": true
+          },
+          "formSubmitURL": {
+ 	    "type": "string",
+            "optional": true
+          },
+          "realm": {
+ 	    "type": "string",
+            "optional": true
+          },
+          "usernameField": {
+ 	    "type": "string",
+            "optional": true
+          },
+          "passwordField": {
+ 	    "type": "string",
+            "optional": true
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "search",
+        "type": "function",
+        "async": "callback",
+        "description": "Search for matching logins.  Returns a Promise that resolves to a list of matching LoginItem objects.  Only items that the current extension has access to (either because they belong to the extension or because the extension has a host permission for the origin of the item) are returned.",
+        "parameters": [
+          {
+            "name": "query",
+            "$ref": "LoginQuery"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [
+              {
+                "name": "results",
+                "type": "array",
+                "items": {
+                  "$ref": "LoginItem"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "store",
+        "type": "function",
+        "async": "callback",
+        "description": "Store the given LoginItem.  The extension must have permission for the given origin.",
+        "parameters": [
+          {
+            "name": "info",
+            "$ref": "LoginItem"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [ ]
+          }
+        ]
+      },
+      {
+        "name": "remove",
+        "type": "function",
+        "async": "callback",
+        "description": "Remove all saved logins matching the given query that this extension has permission to access.",
+        "parameters": [
+          {
+            "name": "options",
+            "$ref": "LoginQuery"
+          },
+          {
+            "name": "callback",
+            "optional": true,
+            "type": "function",
+            "parameters": [ ]
+          }
+
+        ]
+      }
+    ]
+  }
+]
