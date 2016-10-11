@@ -1,24 +1,31 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+<?xml version="1.0" encoding="utf-8"?>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+    <em:id>logins@experiments.addons.mozilla.org</em:id>
+    <em:name>Experimental Logins API</em:name>
+    <em:type>256</em:type>
+    <em:version>0.1</em:version>
+    <em:description>Experimental Logins API</em:description>
+    <em:creator>WebExtension Experiments Team</em:creator>
+    <em:multiprocessCompatible>true</em:multiprocessCompatible>
 
-  <Description about="urn:mozilla:install-manifest"
-               em:id="logins@experiments.addons.mozilla.org"
-               em:name="Experimental Logins API"
-               em:type="256"
-               em:version="0.1"
-               em:description="logins api"
-               em:creator="Mozilla">
-    
+    <!-- Firefox -->
     <em:targetApplication>
-      <!-- Firefox -->
-      <Description em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   em:minVersion="51.0"
-                   em:maxVersion="*"/>
-      <!-- for testing -->
-      <Description em:id="xpcshell@tests.mozilla.org"
-                   em:minVersion="1"
-                   em:maxVersion="2"/>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>51.0</em:minVersion>
+        <em:maxVersion>*</em:maxVersion>
+      </Description>
     </em:targetApplication>
+
+    <!-- for testing -->
+    <em:targetApplication>
+      <Description>
+        <em:id>xpcshell@tests.mozilla.org</em:id>
+        <em:minVersion>1</em:minVersion>
+        <em:maxVersion>2</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
   </Description>
 </RDF>
